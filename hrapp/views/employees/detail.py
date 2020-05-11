@@ -18,7 +18,8 @@ def get_employee(employee_id):
             e.last_name,
             e.start_date,
             e.is_supervisor,
-            d.id department_id
+            d.id department_id,
+            d.dept_name
         FROM hrapp_employee e
         JOIN hrapp_department d ON e.department_id = d.id
         WHERE e.id = ?
@@ -35,32 +36,6 @@ def employee_detail(request, employee_id):
 
     elif request.method == 'POST':
         form_data = request.POST
-        # Check if this POST is for editing a employee
-        if (
-            "actual_method" in form_data
-            and form_data["actual_method"] == "PUT"
-        ):
-            with sqlite3.connect(Connection.db_path) as conn:
-                db_cursor = conn.cursor()
-
-                db_cursor.execute("""
-                UPDATE hrapp_employee
-                SET first_name = ?,
-                    last_name = ?,
-                    start_date = ?,
-                    department_id = ?,
-                    is_supervisor = ?
-                WHERE id = ?
-                """,
-                    (
-                        form_data['first_name'], form_data['last_name'],
-                        form_data['start_date'], form_data['department_id'],
-                        form_data["is_supervisor"], employee_id,
-                    ))
-
-            return redirect(reverse('hrapp:employees'))
-
-        # Check if this POST is for deleting a employee
         if (
             "actual_method" in form_data
             and form_data["actual_method"] == "DELETE"
@@ -73,7 +48,7 @@ def employee_detail(request, employee_id):
                     WHERE id = ?
                 """, (employee_id,))
 
-            return redirect(reverse('hrapp:employees'))
+            return redirect(reverse('hrapp:employee_list'))
 
 def create_employee(cursor, row):
     _row = sqlite3.Row(cursor, row)
@@ -88,7 +63,7 @@ def create_employee(cursor, row):
 
     department = Department()
     department.id = _row["department_id"]
-    # department.name = _row["name"]
+    department.dept_name = _row["dept_name"]
 
     employee.department = department
 

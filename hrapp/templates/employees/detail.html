@@ -2,8 +2,8 @@
     {% block content %}
       <section id="employee-detail">
           <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
-          <h3>Department {{ employee.department.name }}</h3>
-          <div>Start Date {{ employee.start_date }}</div>
+          <h3>Department: {{ employee.department.dept_name }}</h3>
+          <div>Start Date: {{ employee.start_date }}</div>
           <div>Supervisor: {{ employee.is_supervisor }}</div>
       </section>
 

@@ -21,9 +21,9 @@
         </fieldset>
         <fieldset>
             <label for="is_supervisor">Role: </label>
-            <select id="is_supervisor" type="boolean" name="is_supervisor">
-                <option value=true>Supervisor</option>
-                <option value=false>Not Supervisor</option>
+            <select id="is_supervisor" name="is_supervisor">
+                <option value='True'>Supervisor</option>
+                <option value='False' {% if employee.is_supervisor == 'False' %}selected{% endif %}>Not Supervisor</option>
             </select>
         </fieldset>
         <fieldset>
