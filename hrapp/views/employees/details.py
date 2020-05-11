@@ -17,7 +17,6 @@ def get_employee(employee_id):
             e.first_name,
             e.last_name,
             e.start_date,
-            e.department_id,
             e.is_supervisor,
             d.id department_id
         FROM hrapp_employee e
@@ -79,7 +78,7 @@ def employee_details(request, employee_id):
 def create_employee(cursor, row):
     _row = sqlite3.Row(cursor, row)
 
-    employee = employee()
+    employee = Employee()
     employee.id = _row["employee_id"]
     employee.first_name = _row["first_name"]
     employee.last_name = _row["last_name"]
@@ -89,7 +88,7 @@ def create_employee(cursor, row):
 
     department = Department()
     department.id = _row["department_id"]
-    department.name = _row["department_name"]
+    # department.name = _row["name"]
 
     employee.department = department
 

@@ -1,13 +1,16 @@
 {% extends 'shared/base.html' %}
-{% block content %}
-<h1>Employees</h1>
 
-<ol>
-{% for employee in employees %}
+{% block content %}
+    <h1>Employees</h1>
+
+    <a href="{% url 'hrapp:employee_form' %}">Add Employee</a>
+
+    <ol class="employees">
+    {% for employee in employees %}
     <li>
         <div>{{ employee.first_name }} {{ employee.last_name }}</div>
         <div>Department: {{employee.department}}</div>
     </li>
-{% endfor %}
-</ol>
+    {% endfor %}
+    </ol>
 {% endblock content %}

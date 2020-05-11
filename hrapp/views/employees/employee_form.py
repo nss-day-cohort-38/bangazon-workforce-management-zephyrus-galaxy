@@ -22,7 +22,21 @@ def get_employees():
             d.id department_id
         FROM hrapp_employee e
         JOIN hrapp_department d ON e.department_id = d.id
-        WHERE e.id = ?
+        """)
+
+        return db_cursor.fetchall()
+
+def get_departments():
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = model_factory(Department)
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT
+            d.id,
+            d.dept_name,
+            d.budget
+        FROM hrapp_department d
         """)
 
         return db_cursor.fetchall()
@@ -32,9 +46,13 @@ def get_employees():
 def employee_form(request):
     if request.method == 'GET':
         employees = get_employees()
+        # employee = get_employee() - not sure what to do here, try again after lunch
+        departments = get_departments()
         template = 'employees/employee_form.html'
         context = {
-            'all_employees': employees
+            'employee': employee,
+            'all_employees': employees,
+            'all_departments': departments
         }
 
         return render(request, template, context)
@@ -46,11 +64,13 @@ def employee_edit_form(request, employee_id):
     if request.method == 'GET':
         employee = get_employee(employee_id)
         employees = get_employees()
+        departments = get_departments()
 
         template = 'employees/employee_form.html'
         context = {
             'employee': employee,
-            'all_employees': employees
+            'all_employees': employees,
+            'all_departments': departments
         }
 
         return render(request, template, context)

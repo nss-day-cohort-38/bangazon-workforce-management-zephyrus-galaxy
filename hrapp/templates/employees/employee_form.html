@@ -26,6 +26,18 @@
                 <option value=false>Not Supervisor</option>
             </select>
         </fieldset>
+        <fieldset>
+            <label for="department">Department: </label>
+            <select id="department" type="text" name="department">
+                  {% for department in all_departments %}
+                      <option value="{{ department.id }}" 
+                      {% if employee.department_id == department.id %}
+                        selected
+                      {% endif %}
+                      >{{ department.dept_name }}</option>
+                  {% endfor %}
+            </select>
+        </fieldset>
         {% if employee.id is not None %}
           <input type="hidden" name="actual_method" value="PUT">
           <input type="submit" value="Update" />
