@@ -1,14 +1,14 @@
 import sqlite3
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from hrapp.models import Employee, Department, modelfactory
+from hrapp.models import Employee, Department, model_factory
 from ..connection import Connection
 from .details import get_employee
 
 
 def get_employees():
     with sqlite3.connect(Connection.db_path) as conn:
-        conn.row_factory = modelfactory(Employee)
+        conn.row_factory = model_factory(Employee)
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
