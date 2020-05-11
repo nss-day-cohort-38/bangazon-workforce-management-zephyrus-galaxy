@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Library</title>
+  </head>
+  <body>
+    <h1>Training Programs</h1>
+
+    <ol>
+    {% for program in all_training_programs %}
+        <li>
+            {{program.title}}
+            {{program.start_date}}
+            {{program.end_date}}
+            {{program.capacity}}
+        </li>
+    {% endfor %}
+    </ol>
+  </body>
+</html>
