@@ -30,10 +30,9 @@
             <label for="department">Department: </label>
             <select id="department" name="department">
                   {% for department in all_departments %}
-                      <option {% if employee %} value="{{ department.id }}" 
+                      <option value="{{ department.id }}" 
                       {% if employee.department_id == department.id %}
                         selected
-                      {% endif %}
                       {% endif %}
                       >{{ department.dept_name }}</option>
                   {% endfor %}
