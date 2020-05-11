@@ -1,6 +1,6 @@
 {% extends 'shared/base.html' %}
     {% block content %}
-      <section id="employee-details">
+      <section id="employee-detail">
           <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
           <h3>Department {{ employee.department.name }}</h3>
           <div>Start Date {{ employee.start_date }}</div>
@@ -8,7 +8,7 @@
       </section>
 
       <section id="employee-actions" style="display:flex;">
-          <form action="{% url 'hrapp:employee' employee.id %}" method="POST">
+          <form action="{% url 'hrapp:employee_detail' employee.id %}" method="POST">
               {% csrf_token %}
               <input type="hidden" name="actual_method" value="DELETE">
               <button>Delete</button>

@@ -1,9 +1,9 @@
 import sqlite3
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from hrapp.models import Employee, Department, model_factory
 from ..connection import Connection
-from .details import get_employee
+from .detail import get_employee
 
 
 def get_employees():
@@ -45,17 +45,29 @@ def get_departments():
 @login_required
 def employee_form(request):
     if request.method == 'GET':
-        employees = get_employees()
-        # employee = get_employee() - not sure what to do here, try again after lunch
         departments = get_departments()
         template = 'employees/employee_form.html'
         context = {
-            'employee': employee,
-            'all_employees': employees,
             'all_departments': departments
         }
-
         return render(request, template, context)
+    elif request.method == 'POST':
+        form_data = request.POST
+
+    with sqlite3.connect(Connection.db_path) as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        INSERT INTO hrapp_employee
+        (
+            first_name, last_name, start_date, is_supervisor, department_id
+        )
+        VALUES (?, ?, ?, ?, ?)
+        """,
+        (form_data['first_name'], form_data['last_name'], form_data['start_date'],
+        form_data['is_supervisor'], form_data['department_id']))
+
+    return redirect(reverse('hrapp:employees'))
 
 
 @login_required
