@@ -65,9 +65,9 @@ def employee_form(request):
         VALUES (?, ?, ?, ?, ?)
         """,
         (form_data['first_name'], form_data['last_name'], form_data['start_date'],
-        form_data['is_supervisor'], form_data['department_id']))
+        form_data['is_supervisor'], form_data['department']))
 
-    return redirect(reverse('hrapp:employees'))
+    return redirect('hrapp:employee_list')
 
 
 @login_required
