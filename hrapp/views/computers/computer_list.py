@@ -32,7 +32,7 @@ def computer_list(request):
                 computer.decommission_date = row['decommission_date']
                 all_computers.append(computer)
 
-    template = 'computer/computer_list.html'
+    template = 'computers/computer_list.html'
     context = {
         'computers': all_computers
     }
