@@ -6,7 +6,12 @@
     <div>Employees in {{ department.name }} department:</div>
     <ul>
     {% for employee in employees %}
-    <li>{{ employee.first_name }} {{ employee.last_name }}</li>
+    {% if employee.first_name is not None %}
+        <li>{{ employee.first_name }} {{ employee.last_name }}</li>
+
+    {% else %}
+        <li>there are no employees assigned to this department</li>
+    {% endif %}
     {% endfor %}
     </ul>
 {% endblock %}

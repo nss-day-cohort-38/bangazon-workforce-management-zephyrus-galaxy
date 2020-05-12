@@ -7,7 +7,7 @@
         "last_name": "Josi",
         "department_id": 1,
         "is_supervisor": true,
-        "start_date": "10-10-1998"
+        "start_date": "1998-10-10"
       }
     },
     {
@@ -18,7 +18,7 @@
         "last_name": "Rinne",
         "department_id": 2,
         "is_supervisor": true,
-        "start_date": "10-10-1998"
+        "start_date": "1998-10-10"
       }
     },
     {
@@ -29,7 +29,7 @@
         "last_name": "Forsberg",
         "department_id": 3,
         "is_supervisor": false,
-        "start_date": "10-10-1998"
+        "start_date": "1998-10-10"
       }
     },
     {
@@ -40,7 +40,7 @@
         "last_name": "Duchene",
         "department_id": 4,
         "is_supervisor": true,
-        "start_date": "10-10-1998"
+        "start_date": "1998-10-10"
       }
     },
     {
@@ -51,7 +51,7 @@
         "last_name": "Arvidsson",
         "department_id": 5,
         "is_supervisor": false,
-        "start_date": "10-10-1998"
+        "start_date": "1998-10-10"
       }
     }
 ]
