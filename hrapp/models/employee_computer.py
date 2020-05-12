@@ -8,14 +8,12 @@ class EmployeeComputer(models.Model):
 
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     computer = models.ForeignKey(Computer, on_delete=models.CASCADE)
-    assign_date = models.DateField()
-    unassign_date = models.DateField()
-
+    assign_date = models.DateField(default=None)
+    unassign_date = models.DateField(default=None)
+    
     class Meta:
         verbose_name = ("employee_computer")
         verbose_name_plural = ("employee_computers")
-
-
     def __str__(self):
         return f"{self.employee} {self.computer}"
 

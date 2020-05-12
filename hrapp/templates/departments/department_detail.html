@@ -1,0 +1,12 @@
+{% extends 'shared/base.html'%}
+
+{% block content %}
+  <body>
+    <h1>{{ department.name }}</h1>
+    <div>Employees in {{ department.name }} department:</div>
+    <ul>
+    {% for employee in employees %}
+    <li>{{ employee.first_name }} {{ employee.last_name }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
