@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from hrapp.models import TrainingProgram
 from hrapp.models import model_factory
 from ..connection import Connection
+from datetime import date
 
 
 def get_training_program(trainingprogram_id):

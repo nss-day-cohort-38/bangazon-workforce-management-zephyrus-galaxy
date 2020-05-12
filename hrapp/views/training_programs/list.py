@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from hrapp.models import TrainingProgram
 from ..connection import Connection
 from django.urls import reverse
+from datetime import datetime
 
 
 def training_program_list(request):
@@ -22,6 +23,7 @@ def training_program_list(request):
             """)
 
             all_training_programs = []
+
             dataset = db_cursor.fetchall()
 
             for row in dataset:
@@ -36,8 +38,17 @@ def training_program_list(request):
                 all_training_programs.append(training_program)
 
         template = 'training_programs/list.html'
+
+        upcoming_training_programs = []
+
+        for program in all_training_programs:
+            end_date = datetime.strptime(program.end_date, '%Y-%m-%d')
+            if end_date > datetime.today():
+                upcoming_training_programs.append(program)
+
+
         context = {
-            'all_training_programs': all_training_programs
+            'upcoming_training_programs': upcoming_training_programs
         }
 
         return render(request, template, context)

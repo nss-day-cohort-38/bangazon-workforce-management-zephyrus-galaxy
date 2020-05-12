@@ -6,19 +6,20 @@
     <title>Library</title>
   </head>
   <body>
-    <h1>Training Programs</h1>
+    <h1>Upcoming training programs</h1>
    <a href="{% url 'hrapp:training_program_form' %}">Add New Training Program</a>
 
     <ol>
-    {% for program in all_training_programs %}
+    {% for program in upcoming_training_programs %}
 
         <li>
-            <a href="{% url 'hrapp:training_program' program.id%}">{{program.title}} </a>
-            {{program.start_date}}
-            {{program.end_date}}
-            {{program.capacity}}
+            Name: <a href="{% url 'hrapp:training_program' program.id%}">{{program.title}} </a>
+            <p>Start: {{program.start_date}}</p>
+            <p>End: {{program.end_date}}</p>
+            <p>Capacity: {{program.capacity}}</p>
         </li>
     {% endfor %}
     </ol>
+
   </body>
 </html>
