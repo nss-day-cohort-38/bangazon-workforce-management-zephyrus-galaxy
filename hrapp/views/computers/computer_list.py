@@ -16,7 +16,7 @@ def computer_list(request):
                 c.make,
                 c.manufacturer,
                 c.purchase_date,
-                c.decomission_date
+                c.decommission_date
             FROM hrapp_computer c
             """)
 
@@ -29,7 +29,7 @@ def computer_list(request):
                 computer.make = row['make']
                 computer.manufacturer = row['manufacturer']
                 computer.purchase_date = row['purchase_date']
-                computer.decomission_date = row['decomission_date']
+                computer.decommission_date = row['decommission_date']
                 all_computers.append(computer)
 
     template = 'computer/computer_list.html'
