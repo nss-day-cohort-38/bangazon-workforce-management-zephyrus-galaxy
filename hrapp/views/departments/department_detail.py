@@ -4,7 +4,6 @@ from hrapp.models import Department, Employee
 from ..connection import Connection
 from django.contrib.auth.decorators import login_required
 
-@login_required
 def all_departments(department_id):
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = sqlite3.Row
