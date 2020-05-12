@@ -8,3 +8,16 @@ body {
 .main-content {
   padding: 1em 2em;
 }
+
+.navList {
+  list-style-type: none;
+  display: flex;
+  border: 1px solid lightgray;
+  padding: 1em;
+  margin: 0;
+  background-color: lightblue;
+}
+
+.navList__route {
+  margin: 0 0.5em;
+}
