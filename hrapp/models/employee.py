@@ -8,7 +8,7 @@ class Employee(models.Model):
     last_name = models.CharField(max_length=55)
     start_date = models.DateField()
     is_supervisor = models.BooleanField()
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, default=None)
 
     class Meta:
         verbose_name = ("employee")
