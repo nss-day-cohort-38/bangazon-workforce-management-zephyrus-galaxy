@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Library</title>
+  </head>
+  <body>
+    <h1>{{ training_program.title }}</h1>
+    <h2>By {{ training_program.start_date }}</h2>
+
+    <div>Published in {{ training_program.end_date }}</div>
+    <div>ISBN: {{ training_program.capacity }}</div>
+  </body>
+</html>
