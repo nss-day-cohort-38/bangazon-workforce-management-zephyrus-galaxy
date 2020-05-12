@@ -1,0 +1,21 @@
+{% extends 'shared/base.html' %}
+    {% block content %}
+      <section id="employee-detail">
+          <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
+          <h3>Department: {{ employee.department.dept_name }}</h3>
+          <div>Start Date: {{ employee.start_date }}</div>
+          <div>Supervisor: {{ employee.is_supervisor }}</div>
+      </section>
+
+      <section id="employee-actions" style="display:flex;">
+          <form action="{% url 'hrapp:employee_detail' employee.id %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="actual_method" value="DELETE">
+              <button>Delete</button>
+          </form>
+          <form action="{% url 'hrapp:employee_edit_form' employee.id %}" method="GET">
+              {% csrf_token %}
+              <button>Edit</button>
+          </form>
+      </section>
+    {% endblock %}
