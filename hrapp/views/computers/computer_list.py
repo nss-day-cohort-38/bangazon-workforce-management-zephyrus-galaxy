@@ -30,7 +30,9 @@ def computer_list(request):
                 computer.manufacturer = row['manufacturer']
                 computer.purchase_date = row['purchase_date']
                 computer.decommission_date = row['decommission_date']
-                all_computers.append(computer)
+                if(computer not in all_computers):
+                    all_computers.append(computer)
+                    
 
     template = 'computers/computer_list.html'
     context = {

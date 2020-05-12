@@ -2,13 +2,11 @@
 
 {% block content %}
 <h1>Computers</h1>
-
-<ol>
- {% for computer in computers %}
-    <li>
-        <p>{{ computer }}</p>
-        Current computer: {{employee.computer}}
-    </li> 
+<ul>
+{% for computer in computers %}
+    <li >
+ <a href="{% url 'hrapp:computer_detail' computer.id %}"><h2> {{ computer.manufacturer }} </h2></a> 
+    </li>
 {% endfor %}
-</ol>
+</ul>
 {% endblock content %}
