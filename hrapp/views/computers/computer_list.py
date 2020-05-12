@@ -1,10 +1,11 @@
 import sqlite3
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from hrapp.models import Computer
 from ..connection import Connection
 
 
 def computer_list(request):
+    all_computers = []
     if request.method == 'GET':
         with sqlite3.connect(Connection.db_path) as conn:
             conn.row_factory = sqlite3.Row
@@ -20,7 +21,7 @@ def computer_list(request):
             FROM hrapp_computer c
             """)
 
-            all_computers = []
+           
             dataset = db_cursor.fetchall()
 
             for row in dataset:
@@ -32,7 +33,29 @@ def computer_list(request):
                 computer.decommission_date = row['decommission_date']
                 if(computer not in all_computers):
                     all_computers.append(computer)
-                    
+    elif request.method == 'POST':
+        form_data = request.POST
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "PUT"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                    UPDATE hrapp_computer
+                    SET manufacturer = ?,
+                    make = ?,
+                    purchase_date = ?,
+                    decommission_date = ?
+                """,
+                    (
+                        form_data['manufacturer'], form_data['make'],
+                        form_data['purchase_date'], form_data['decommission_date']
+                    ))
+
+            return redirect('hrapp:computer_list')
+           
 
     template = 'computers/computer_list.html'
     context = {
@@ -40,3 +63,5 @@ def computer_list(request):
     }
 
     return render(request, template, context)
+
+
