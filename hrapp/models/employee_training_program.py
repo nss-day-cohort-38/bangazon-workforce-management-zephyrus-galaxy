@@ -1,6 +1,7 @@
 from django.db import models
-from ..models import Employee, TrainingProgram
+from .employee import Employee
 from django.urls import reverse
+from .training_program import TrainingProgram
 
 class EmployeeTrainingProgram(models.Model):
 
