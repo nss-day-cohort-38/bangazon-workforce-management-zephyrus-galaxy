@@ -4,6 +4,7 @@ from hrapp.models import Department, Employee
 from ..connection import Connection
 from django.contrib.auth.decorators import login_required
 
+@login_required
 def all_departments(department_id):
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = sqlite3.Row
@@ -25,28 +26,28 @@ def all_departments(department_id):
 
         data =  db_cursor.fetchall()
 
-        department_check = []
-        employee_group = []
+        department_list = []
+        employee_list = []
         for row in data:
-            if(len(department_check) == 0):
+            if(len(department_list) == 0):
                 department = Department()
                 department.id = row['department_id']
                 department.name = row['dept_name']
                 department.budget = row['budget']
-                department_check.append(department)
+                department_list.append(department)
 
             employee = Employee()
             employee.id = row['id']
             employee.first_name = row['first_name']
             employee.last_name = row['last_name']
             employee.department_id = row['department_id']
-            employee_group.append(employee)
+            employee_list.append(employee)
 
 
         department_obj = {}
         
-        department_obj["department"] = department_check[0]
-        department_obj["employees"] = employee_group
+        department_obj["department"] = department_list[0]
+        department_obj["employees"] = employee_list
         return department_obj
 
 @login_required
