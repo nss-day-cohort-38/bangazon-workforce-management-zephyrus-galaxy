@@ -8,18 +8,13 @@ from ..connection import Connection
 
 def get_computer(computer_id):
     with sqlite3.connect(Connection.db_path) as conn:
-        conn.row_factory = create_computer
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        SELECT
-            c.id computer_id,
-            c.make,
-            c.manufacturer,
-            c.purchase_date,
-            c.decommission_date
+        SELECT * 
         FROM hrapp_computer c
-        """)
+        WHERE id = ?
+        """,(computer_id,))
 
         return db_cursor.fetchone()
 
