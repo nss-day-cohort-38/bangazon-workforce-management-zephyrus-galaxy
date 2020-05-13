@@ -8,7 +8,7 @@ from ..connection import Connection
 from datetime import date
 
 
-def get_training_program(trainingprogram_id):
+def get_training_program(training_program_id):
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = model_factory(TrainingProgram)
         db_cursor = conn.cursor()
@@ -22,27 +22,44 @@ def get_training_program(trainingprogram_id):
             t.capacity
         FROM hrapp_trainingprogram t
         WHERE t.id = ?
-        """, (trainingprogram_id,))
+        """, (training_program_id,))
 
         return db_cursor.fetchone()
+        
 
-# def get_employee_training_program(training_program_id): 
-#     with sqlite3.connect(Connection.db_path) as conn:
-#         conn.row_factory = model_factory(TrainingProgram)
-#         db_cursor = conn.cursor()
-#         db_cursor.execute("""
-#         SELECT
-#         """, (training_program_id,))
-#         return db_cursor.fetchall()
+def get_employee_training_program(training_program_id): 
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = model_factory(TrainingProgram)
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+        SELECT
+            etp.id, 
+                etp.employee_id,
+                etp.training_program_id, 
+                e.id, 
+                e.first_name, 
+                e.last_name, 
+                t.id,
+                t.title,
+                t.start_date,
+                t.end_date,
+                t.capacity
+            FROM hrapp_employeetrainingprogram etp
+            JOIN hrapp_trainingprogram t ON t.id = etp.training_program_id    
+            JOIN hrapp_employee e ON e.id = etp.employee_id     
+            WHERE t.id = ?
+        """, (training_program_id,))
+        return db_cursor.fetchall()
 
 
 def training_program_details(request, training_program_id):
     if request.method == 'GET':
         training_program = get_training_program(training_program_id)
-
+        employee_training_program = get_employee_training_program(training_program_id)
         template = 'training_programs/detail.html'
         context = {
-            'training_program': training_program
+            'training_program': training_program,
+            'employee_training_program': employee_training_program
         }
 
         return render(request, template, context)
@@ -50,7 +67,6 @@ def training_program_details(request, training_program_id):
     elif request.method == 'POST':
         form_data = request.POST
 
-        # Check if this POST is for editing a book
         if (
             "actual_method" in form_data
             and form_data["actual_method"] == "PUT"
@@ -77,10 +93,6 @@ def training_program_details(request, training_program_id):
     if request.method == 'POST':
         form_data = request.POST
 
-        # Check if this POST is for deleting a training_program
-        #
-        # Note: You can use parenthesis to break up complex
-        #       `if` statements for higher readability
         if (
             "actual_method" in form_data
             and form_data["actual_method"] == "DELETE"
