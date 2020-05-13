@@ -8,10 +8,16 @@ from ..connection import Connection
 
 def get_computer(computer_id):
     with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = create_computer
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        SELECT * 
+        SELECT 
+            c.id,
+            c.make,
+            c.manufacturer,
+            c.purchase_date,
+            c.decommission_date
         FROM hrapp_computer c
         WHERE id = ?
         """,(computer_id,))
@@ -30,7 +36,8 @@ def computer_detail(request, computer_id):
         if (
             "actual_method" in form_data
             and form_data["actual_method"] == "DELETE"
-        ):
+        ): 
+                
             with sqlite3.connect(Connection.db_path) as conn:
                 db_cursor = conn.cursor()
 
@@ -45,7 +52,7 @@ def create_computer(cursor, row):
     _row = sqlite3.Row(cursor, row)
 
     computer = Computer()
-    computer.id = _row["computer_id"]
+    computer.id = _row["id"]
     computer.manufacturer = _row["manufacturer"]
     computer.make = _row["make"]
     computer.purchase_date = _row["purchase_date"]

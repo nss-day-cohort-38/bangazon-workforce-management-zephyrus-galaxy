@@ -8,6 +8,6 @@
     <section id="computer-actions" style="display:flex;">
           <form action="{% url 'hrapp:computer_detail' computer.id %}" method="POST">
               {% csrf_token %}
-              <input type="hidden" name="actual_method" value="DELETE" onclick="return confirm('Are you sure?')">
-              <button>Delete</button>
+              <input type="hidden" name="actual_method" value="DELETE" >
+              <button onclick="return confirm('Are you sure?')">Delete</button>
 {% endblock %}
