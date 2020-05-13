@@ -1,0 +1,15 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<h1>Computers</h1>
+<div>
+{% for computer in computers %}
+    
+ <a href="{% url 'hrapp:computer_detail' computer.id %}"><h2> {{ computer.manufacturer }} </h2></a> 
+   
+{% endfor %}
+</div>
+<div>
+<form action="{% url 'hrapp:computer_form' %}"><button>Add Computer</button></form>
+</div>
+{% endblock content %}
