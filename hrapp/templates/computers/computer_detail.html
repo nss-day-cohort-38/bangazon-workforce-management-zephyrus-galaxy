@@ -8,6 +8,8 @@
     <section id="computer-actions" style="display:flex;">
           <form action="{% url 'hrapp:computer_detail' computer.id %}" method="POST">
               {% csrf_token %}
+            {% if employee_computer.first_name == NULL %}
               <input type="hidden" name="actual_method" value="DELETE" >
               <button onclick="return confirm('Are you sure?')">Delete</button>
+            {% endif %}
 {% endblock %}

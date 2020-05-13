@@ -2,7 +2,7 @@ import sqlite3
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from hrapp.models import modelfactory, Computer
+from hrapp.models import model_factory, Computer
 from ..connection import Connection
 
 
@@ -24,12 +24,43 @@ def get_computer(computer_id):
 
         return db_cursor.fetchone()
 
+def get_employee_computer(computer_id):
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = model_factory(Computer)
+        db_cursor = conn.cursor()
+        
+        db_cursor.execute('''
+        SELECT c.id,
+                c.make,
+                c.manufacturer,
+                c.purchase_date,
+                c.decommission_date,
+                ec.assign_date,
+                ec.unassign_date,
+                e.first_name,
+                e.last_name
+                from hrapp_computer c
+                left join hrapp_employeecomputer ec on ec.computer_id = c.id
+                left join hrapp_employee e on ec.employee_id = e.id
+                where c.id = ?
+            ''', (computer_id,))
+         
+        return db_cursor.fetchone()
+
 @login_required
 def computer_detail(request, computer_id):
     if request.method == 'GET':
         computer = get_computer(computer_id)
+        employee_computer = get_employee_computer(computer_id)
+        
+
+        context = {
+            'computer': computer,
+            'employee_computer': employee_computer
+        }
         template_name = 'computers/computer_detail.html'
-        return render(request, template_name, {'computer': computer})
+
+        return render(request, template_name, context)
 
     elif request.method == 'POST':
         form_data = request.POST
