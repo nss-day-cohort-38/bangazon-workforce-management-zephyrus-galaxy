@@ -63,7 +63,7 @@ def training_program_details(request, training_program_id):
                 SET title = ?,
                     start_date = ?,
                     end_date = ?,
-                    capacity = ?,
+                    capacity = ?
                 WHERE id = ?
                 """,
                 (
