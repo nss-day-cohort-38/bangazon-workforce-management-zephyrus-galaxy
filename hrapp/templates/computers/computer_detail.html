@@ -10,6 +10,4 @@
               {% csrf_token %}
               <input type="hidden" name="actual_method" value="DELETE" >
               <button onclick="return confirm('Are you sure?')">Delete</button>
-              <input type=button value="Back" onClick="javascript:history.go(-1);">
-              
 {% endblock %}
