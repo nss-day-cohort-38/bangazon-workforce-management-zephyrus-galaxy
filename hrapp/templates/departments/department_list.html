@@ -1,0 +1,23 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<div>
+<h1>Departments</h1>
+
+<ul>
+{% for department in departments %}
+    <li >
+        <a href="{% url 'hrapp:department' department.id %}"><h2> {{ department.name }} </h2></a>
+        
+        Budget: ${{ department.budget }}
+        <br>
+        Employees: {{ department.size }}
+
+    </li>
+{% endfor %}
+</ul>
+</div>
+<div>
+<form action="{% url 'hrapp:department_form' %}"><button>Create Department</button></form>
+</div>
+{% endblock content %}
