@@ -20,6 +20,7 @@ def get_employee(employee_id):
             e.is_supervisor,
             d.id department_id,
             d.dept_name,
+            c.id computer_id,
             c.manufacturer,
             c.make
         FROM hrapp_employee e
@@ -72,6 +73,7 @@ def create_employee(cursor, row):
     computer = Computer()
     computer.manufacturer = _row["manufacturer"]
     computer.make = _row["make"]
+    computer.id = _row["computer_id"]
 
     # training_program = TrainingProgram()
     # training_program.title = _row["title"]

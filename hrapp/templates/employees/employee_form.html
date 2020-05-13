@@ -30,11 +30,25 @@
             <label for="department">Department: </label>
             <select id="department" name="department">
                   {% for department in all_departments %}
-                      <option value="{{ department.id }}" 
+                      <option value="{{ department.id }}"
                       {% if employee.department_id == department.id %}
                         selected
                       {% endif %}
                       >{{ department.dept_name }}</option>
+                  {% endfor %}
+            </select>
+        </fieldset>
+        <fieldset>
+            <label for="computer_id">Computer: </label>
+            <select id="computer_id" name="computer_id">
+                  {% for computer in all_computers %}
+                      <option value="{{ computer.id }}"
+                      {% for computer_assignment in all_employeecomputers %}
+                      {% if employee.computer.id == computer.computer_id %}
+                        selected
+                      {% endif %}
+                      {% endfor %}
+                      >{{ computer.manufacturer }} {{ computer.make }} ({{ computer.computer_id }})</option>
                   {% endfor %}
             </select>
         </fieldset>
