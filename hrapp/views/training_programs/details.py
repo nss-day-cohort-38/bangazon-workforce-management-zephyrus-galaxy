@@ -26,14 +26,14 @@ def get_training_program(trainingprogram_id):
 
         return db_cursor.fetchone()
 
-def get_employee_training_program(training_program_id): 
-    with sqlite3.connect(Connection.db_path) as conn:
-        conn.row_factory = model_factory(TrainingProgram)
-        db_cursor = conn.cursor()
-        db_cursor.execute("""
-        SELECT
-        """, (training_program_id,))
-        return db_cursor.fetchall()
+# def get_employee_training_program(training_program_id): 
+#     with sqlite3.connect(Connection.db_path) as conn:
+#         conn.row_factory = model_factory(TrainingProgram)
+#         db_cursor = conn.cursor()
+#         db_cursor.execute("""
+#         SELECT
+#         """, (training_program_id,))
+#         return db_cursor.fetchall()
 
 
 def training_program_details(request, training_program_id):
