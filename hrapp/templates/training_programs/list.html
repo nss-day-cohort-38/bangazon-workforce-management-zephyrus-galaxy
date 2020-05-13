@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Library</title>
+    <title>Bangazon</title>
   </head>
   <body>
     <h1>Upcoming training programs</h1>
@@ -13,7 +13,7 @@
     {% for program in upcoming_training_programs %}
 
         <li>
-            Name: <a href="{% url 'hrapp:training_program' program.id%}">{{program.title}} </a>
+            <a href="{% url 'hrapp:training_program' program.id%}"> {{program.title}} </a>
             <p>Start: {{program.start_date}}</p>
             <p>End: {{program.end_date}}</p>
             <p>Capacity: {{program.capacity}}</p>

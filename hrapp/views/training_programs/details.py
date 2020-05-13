@@ -26,7 +26,16 @@ def get_training_program(trainingprogram_id):
 
         return db_cursor.fetchone()
 
-@login_required
+def get_employee_training_program(training_program_id): 
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = model_factory(TrainingProgram)
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+        SELECT
+        """, (training_program_id,))
+        return db_cursor.fetchall()
+
+
 def training_program_details(request, training_program_id):
     if request.method == 'GET':
         training_program = get_training_program(training_program_id)
@@ -37,6 +46,33 @@ def training_program_details(request, training_program_id):
         }
 
         return render(request, template, context)
+
+    elif request.method == 'POST':
+        form_data = request.POST
+
+        # Check if this POST is for editing a book
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "PUT"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                UPDATE hrapp_trainingprogram
+                SET title = ?,
+                    start_date = ?,
+                    end_date = ?,
+                    capacity = ?,
+                WHERE id = ?
+                """,
+                (
+                    form_data['title'], form_data['start_date'],
+                    form_data['end_date'], form_data['capacity'],
+                    training_program_id,
+                ))
+
+            return redirect(reverse('hrapp:training_programs'))
 
     if request.method == 'POST':
         form_data = request.POST
