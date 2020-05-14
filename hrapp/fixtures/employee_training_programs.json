@@ -38,5 +38,45 @@
         "employee_id": 5,
         "training_program_id": 5
       }
-    }
+    },
+    {
+        "model": "hrapp.employeetrainingprogram",
+        "pk": 6,
+        "fields": {
+          "employee_id": 1,
+          "training_program_id": 6
+        }
+      },
+      {
+        "model": "hrapp.employeetrainingprogram",
+        "pk": 7,
+        "fields": {
+          "employee_id": 2,
+          "training_program_id": 7
+        }
+      },
+      {
+        "model": "hrapp.employeetrainingprogram",
+        "pk": 8,
+        "fields": {
+          "employee_id": 3,
+          "training_program_id": 8
+        }
+      },
+      {
+        "model": "hrapp.employeetrainingprogram",
+        "pk": 9,
+        "fields": {
+          "employee_id": 4,
+          "training_program_id": 9
+        }
+      },
+      {
+        "model": "hrapp.employeetrainingprogram",
+        "pk": 10,
+        "fields": {
+          "employee_id": 5,
+          "training_program_id": 10
+        }
+      }
 ]

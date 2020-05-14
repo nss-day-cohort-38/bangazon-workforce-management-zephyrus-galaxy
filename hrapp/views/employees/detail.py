@@ -59,7 +59,7 @@ def employee_detail(request, employee_id):
                 """, (employee_id,))
 
             return redirect(reverse('hrapp:employee_list'))
-
+#TODO when a training program gets deleted it still needs to delete the training program from the employeetrainingprogram table
 def get_training(employee_id):
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = model_factory(TrainingProgram)
