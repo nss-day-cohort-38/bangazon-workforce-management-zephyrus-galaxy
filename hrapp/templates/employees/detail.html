@@ -4,7 +4,11 @@
           <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
           <h3>Department: {{ employee.department.dept_name }}</h3>
           <h3>Computer: {{ employee.computer.manufacturer }} {{ employee.computer.make }}</h3>
-          <h3>Training Program: {{ employee.training_program.title }}</h3>
+          <h3>Training Programs: <ul>
+	            {% for program in training_program %}
+	                <li>{{ program.title }}</li>
+	            {% endfor %}
+	           </ul></h3>
           <div>Start Date: {{ employee.start_date }}</div>
           <div>Supervisor: {{ employee.is_supervisor }}</div>
       </section>

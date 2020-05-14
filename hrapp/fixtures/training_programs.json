@@ -48,5 +48,55 @@
         "end_date": "2020-10-20",
         "capacity": 40
       }
-    }
+    },
+    {
+        "model": "hrapp.trainingprogram",
+        "pk": 6,
+        "fields": {
+          "title": "Information Technology 102",
+          "start_date": "2012-10-20",
+          "end_date": "2030-05-05",
+          "capacity": 20
+        }
+      },
+      {
+        "model": "hrapp.trainingprogram",
+        "pk": 7,
+        "fields": {
+          "title": "Accounting 102",
+          "start_date": "2020-09-05",
+          "end_date": "2020-10-20",
+          "capacity": 25
+        }
+      },
+      {
+        "model": "hrapp.trainingprogram",
+        "pk": 8,
+        "fields": {
+          "title": "Sales 102",
+          "start_date": "2020-08-05",
+          "end_date": "2020-10-20",
+          "capacity": 30
+        }
+      },
+      {
+        "model": "hrapp.trainingprogram",
+        "pk": 9,
+        "fields": {
+          "title": "Marketing 102",
+          "start_date": "2020-07-05",
+          "end_date": "2020-10-20",
+          "capacity": 35
+        }
+      },
+      {
+        "model": "hrapp.trainingprogram",
+        "pk": 10,
+        "fields": {
+          "title": "Finance 102",
+          "start_date": "2020-06-05",
+          "end_date": "2020-10-20",
+          "capacity": 40
+        }
+      }
   ]

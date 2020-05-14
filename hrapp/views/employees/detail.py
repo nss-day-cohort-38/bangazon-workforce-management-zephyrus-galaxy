@@ -2,7 +2,7 @@ import sqlite3
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from hrapp.models import Employee, Department, modelfactory, Computer
+from hrapp.models import Employee, Department, model_factory, Computer, TrainingProgram
 from ..connection import Connection
 
 
@@ -36,8 +36,13 @@ def get_employee(employee_id):
 def employee_detail(request, employee_id):
     if request.method == 'GET':
         employee = get_employee(employee_id)
+        training_program = get_training(employee_id)
         template_name = 'employees/detail.html'
-        return render(request, template_name, {'employee': employee})
+        context = {
+            'employee': employee,
+            'training_program': training_program
+        }
+        return render(request, template_name, context)
 
     elif request.method == 'POST':
         form_data = request.POST
@@ -54,6 +59,25 @@ def employee_detail(request, employee_id):
                 """, (employee_id,))
 
             return redirect(reverse('hrapp:employee_list'))
+#TODO when a training program gets deleted it still needs to delete the training program from the employeetrainingprogram table
+def get_training(employee_id):
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = model_factory(TrainingProgram)
+
+        db_cursor = conn.cursor()
+        db_cursor.execute("""
+        SELECT
+            e.id,
+            t.title
+        FROM
+            hrapp_employee e
+            LEFT JOIN hrapp_employeetrainingprogram et ON e.id = et.employee_id
+            LEFT JOIN hrapp_trainingprogram t ON t.id = et.training_program_id
+        WHERE
+            e.id = ?
+        """, (employee_id,))
+
+        return db_cursor.fetchall()
 
 def create_employee(cursor, row):
     _row = sqlite3.Row(cursor, row)
