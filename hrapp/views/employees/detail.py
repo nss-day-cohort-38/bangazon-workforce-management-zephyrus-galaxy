@@ -2,7 +2,7 @@ import sqlite3
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from hrapp.models import Employee, Department, modelfactory
+from hrapp.models import Employee, Department, modelfactory, Computer
 from ..connection import Connection
 
 
@@ -19,9 +19,14 @@ def get_employee(employee_id):
             e.start_date,
             e.is_supervisor,
             d.id department_id,
-            d.dept_name
+            d.dept_name,
+            c.id computer_id,
+            c.manufacturer,
+            c.make
         FROM hrapp_employee e
         JOIN hrapp_department d ON e.department_id = d.id
+        JOIN hrapp_employeecomputer ec ON e.id = ec.employee_id
+        JOIN hrapp_computer c ON ec.computer_id = c.id
         WHERE e.id = ?
         """, (employee_id,))
 
@@ -65,6 +70,16 @@ def create_employee(cursor, row):
     department.id = _row["department_id"]
     department.dept_name = _row["dept_name"]
 
+    computer = Computer()
+    computer.manufacturer = _row["manufacturer"]
+    computer.make = _row["make"]
+    computer.id = _row["computer_id"]
+
+    # training_program = TrainingProgram()
+    # training_program.title = _row["title"]
+
     employee.department = department
+    employee.computer = computer
+    # employee.training_program = training_program
 
     return employee

@@ -1,9 +1,11 @@
 import sqlite3
+from datetime import date
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
-from hrapp.models import Employee, Department, model_factory
+from hrapp.models import Employee, Department, model_factory, EmployeeComputer
 from ..connection import Connection
 from .detail import get_employee
+from hrapp.views.computers.computer_form import get_computers
 
 
 def get_employees():
@@ -37,6 +39,22 @@ def get_departments():
             d.dept_name,
             d.budget
         FROM hrapp_department d
+        """)
+
+        return db_cursor.fetchall()
+
+def get_employeecomputers():
+    with sqlite3.connect(Connection.db_path) as conn:
+        conn.row_factory = model_factory(EmployeeComputer)
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT
+            ec.id,
+            ec.computer_id,
+            ec.employee_id,
+            ec.unassign_date
+        FROM hrapp_employeecomputer ec
         """)
 
         return db_cursor.fetchall()
@@ -77,12 +95,16 @@ def employee_edit_form(request, employee_id):
         employee = get_employee(employee_id)
         employees = get_employees()
         departments = get_departments()
+        computers = get_computers()
+        computer_assignments = get_employeecomputers()
 
         template = 'employees/employee_form.html'
         context = {
             'employee': employee,
             'all_employees': employees,
-            'all_departments': departments
+            'all_departments': departments,
+            'all_computers': computers,
+            'all_employeecomputers': computer_assignments
         }
 
         return render(request, template, context)
@@ -108,6 +130,25 @@ def employee_edit_form(request, employee_id):
                         form_data['first_name'], form_data['last_name'],
                         form_data['start_date'], form_data['department'], form_data['is_supervisor'], employee_id,
                     ))
+                if form_data['computer_id'] is not form_data['prev_comp_id']:
+                    db_cursor.execute("""
+                    UPDATE hrapp_employeecomputer
+                    SET unassign_date = ?
+                    WHERE id = ?
+                    """,
+                        (
+                            date.today(), form_data['prev_emp_comp_id'],
+                        ))
+                    db_cursor.execute("""
+                    INSERT INTO hrapp_employeecomputer
+                    (
+                        employee_id, computer_id, assign_date, unassign_date
+                    )
+                    VALUES (?,?,?,?)
+                    """,
+                        (
+                            employee_id,  form_data['computer_id'], date.today(), "",
+                        ))
 
             return redirect('hrapp:employee_list')
     
