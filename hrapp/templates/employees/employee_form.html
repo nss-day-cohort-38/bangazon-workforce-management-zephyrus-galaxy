@@ -38,8 +38,8 @@
                   {% endfor %}
             </select>
         </fieldset>
-{% comment %} IF SOMEONE DOESN'T HAVE A COMPUTER, DETAILS PAGE SHOULD STILL LOAD {% endcomment %}
-{% comment %} LIST OF COMPUTERS AVAILABLE TO ASSIGN SHOULD BE LIMITED TO UNASSIGNED COMPUTERS {% endcomment %}
+{% comment %} TODO: IF SOMEONE DOESN'T HAVE A COMPUTER, DETAILS PAGE SHOULD STILL LOAD {% endcomment %}
+{% comment %} TODO: LIST OF COMPUTERS AVAILABLE TO ASSIGN SHOULD BE LIMITED TO UNASSIGNED COMPUTERS {% endcomment %}
         <fieldset>
             <label for="computer_id">Computer: </label>
             <select id="computer_id" name="computer_id">
@@ -57,8 +57,8 @@
         {% for computer in all_computers %}
           {% for computer_assignment in all_employeecomputers %}
             {% if computer_assignment.employee_id == employee.id and computer_assignment.computer_id == computer.computer_id and computer_assignment.unassign_date == "" %}
-              <input type="hidden" name="prev_comp_id" value="{{ computer.computer_id }}">
-              <input type="hidden" name="prev_emp_comp_id" value="{{ computer_assignment.id }}">
+              <input type="hidden" id="prev_comp_id" name="prev_comp_id" value="{{ computer_assignment.computer_id }}">
+              <input type="hidden" id="prev_emp_comp_id" name="prev_emp_comp_id" value="{{ computer_assignment.id }}">
             {% endif %}
           {% endfor %}
         {% endfor %}
